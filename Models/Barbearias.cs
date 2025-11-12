@@ -10,8 +10,7 @@ namespace iBarber.Models
         [Key]
         public int Id { get; set; }
         
-        [Required(ErrorMessage = "Nome é obrigatório")]
-        public string Nome { get; set; }
+       
         
         [Required(ErrorMessage = "Endereço é obrigatório")]
         public string Endereco { get; set; }
@@ -24,5 +23,10 @@ namespace iBarber.Models
 
         [Required(ErrorMessage = "Email é obrigatório")]
         public string Email { get; set; }
+        
+        [Required(ErrorMessage = "Nome é obrigatório")]
+        public string Nome { get; set; }
+
+        public ICollection<Serviços> Serviços{ get; set; }
     }
 }
