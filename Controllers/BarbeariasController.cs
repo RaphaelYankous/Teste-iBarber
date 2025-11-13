@@ -152,5 +152,7 @@ namespace iBarber.Controllers
         {
             return _context.Barbearias.Any(e => e.Id == id);
         }
+
     }
 }
+

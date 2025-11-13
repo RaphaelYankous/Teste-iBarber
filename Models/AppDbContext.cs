@@ -6,6 +6,7 @@ namespace iBarber.Models
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
         public DbSet<Barbearias> Barbearias { get; set; }
         public DbSet<Serviços> Serviços { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
 
     }
 }

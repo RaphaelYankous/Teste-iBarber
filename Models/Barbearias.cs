@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;    
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace iBarber.Models
 {
@@ -9,9 +11,9 @@ namespace iBarber.Models
     {
         [Key]
         public int Id { get; set; }
-        
-       
-        
+
+
+
         [Required(ErrorMessage = "Endereço é obrigatório")]
         public string Endereco { get; set; }
 
@@ -23,10 +25,10 @@ namespace iBarber.Models
 
         [Required(ErrorMessage = "Email é obrigatório")]
         public string Email { get; set; }
-        
+
         [Required(ErrorMessage = "Nome é obrigatório")]
         public string Nome { get; set; }
 
-        public ICollection<Serviços> Serviços{ get; set; }
+        public ICollection<Serviços> Serviços { get; set; }
     }
-}
+}   

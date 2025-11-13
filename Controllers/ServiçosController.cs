@@ -159,5 +159,8 @@ namespace iBarber.Controllers
         {
             return _context.Serviços.Any(e => e.Id == id);
         }
+     
+
+        }
     }
-}
+
