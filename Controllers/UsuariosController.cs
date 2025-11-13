@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace iBarber.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class UsuariosController : Controller
     {
         private readonly AppDbContext _context;
@@ -22,8 +22,8 @@ namespace iBarber.Controllers
         {
             _context = context;
         }
-        [AllowAnonymous]
         // GET: Usuarios
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Usuarios.ToListAsync());
@@ -57,6 +57,7 @@ namespace iBarber.Controllers
                 var usuarioIdentity = new ClaimsIdentity(claims, "Login");
                 ClaimsPrincipal principal = new ClaimsPrincipal(usuarioIdentity);
 
+
                 var props = new AuthenticationProperties 
                 {
                     AllowRefresh = true,
@@ -86,6 +87,7 @@ namespace iBarber.Controllers
             return RedirectToAction("Login", "Usuarios");
         }
 
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();

@@ -21,12 +21,14 @@ namespace iBarber.Controllers
         }
 
         // GET: Barbearias
+
         public async Task<IActionResult> Index()
         {
             return View(await _context.Barbearias.ToListAsync());
         }
 
         // GET: Barbearias/Details/5
+   
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
