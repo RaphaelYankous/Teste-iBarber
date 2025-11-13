@@ -1,4 +1,5 @@
 using iBarber.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 namespace iBarber
@@ -17,6 +18,21 @@ namespace iBarber
 
             builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
+                builder.Services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(opitions =>
+                {
+                    opitions.AccessDeniedPath = "/Usuarios/AccessDenied";
+                    opitions.LoginPath = "/Usuarios/Login";
+                });
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -32,6 +48,7 @@ namespace iBarber
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

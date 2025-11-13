@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using iBarber.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace iBarber.Controllers
 {
+    [Authorize]
     public class ServiçosController : Controller
     {
         private readonly AppDbContext _context;

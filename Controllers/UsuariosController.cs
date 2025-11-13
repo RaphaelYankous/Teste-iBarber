@@ -1,16 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using iBarber.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
-using iBarber.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
+using System.Threading.Tasks;
 
 namespace iBarber.Controllers
 {
+    [Authorize]
     public class UsuariosController : Controller
     {
         private readonly AppDbContext _context;
@@ -19,7 +22,7 @@ namespace iBarber.Controllers
         {
             _context = context;
         }
-
+        [AllowAnonymous]
         // GET: Usuarios
         public async Task<IActionResult> Index()
         {
@@ -27,6 +30,7 @@ namespace iBarber.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(Usuario usuario)
         {
             var dados = await _context.Usuarios
@@ -35,6 +39,7 @@ namespace iBarber.Controllers
             if (dados == null)
             {
                 ViewBag.Mensagem = "Usuário e/ou senha invalidos!";
+                return View();
             }
 
             bool senhaOk = BCrypt.Net.BCrypt.Verify(usuario.Senha, dados.Senha);
@@ -62,6 +67,8 @@ namespace iBarber.Controllers
 
                 await HttpContext.SignInAsync(principal, props);
 
+                return Redirect("/");
+
             }
             else
             {
@@ -70,6 +77,13 @@ namespace iBarber.Controllers
 
 
             return View();
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Login", "Usuarios");
         }
 
         public IActionResult Login()
